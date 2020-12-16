@@ -39,8 +39,9 @@ code {
 }
 .card{
   position: relative;
+  /* display: inline-block; */
   display: inline-flex;
-  width: 25%;
+  width: 250px;
   padding: 15px;
 }
 
@@ -57,4 +58,21 @@ code {
   visibility: hidden;
   opacity: 0;
   transition: .3s opacity;
+}
+
+.Showcase__style__grid {
+  display: block;
+  width: 520px;
+  height: 350px;
+  white-space: nowrap;
+  border: 0;
+  background-color: transparent;
+}
+
+.Showcase__style__gridItem {
+  float: left;
+  width: 141px;
+  padding: 8px;
+  background: transparent;
+  border: 0;
 }

@@ -20,7 +20,7 @@ export const TodoReducer = (state, action) => {
         case ADD_EVENT:
             let file = action.payload.file ? action.payload.file : null
             let newEvent = {
-                id:Date.now(),
+                id:action.payload.id,
                 text: action.payload.text,
                 file: file
                 }

@@ -1,6 +1,5 @@
-import { BrowserRouter, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter,Route } from 'react-router-dom';
 import './App.css';
-import DrapDrop from './components/drap-drop';
 import NavBar from './components/NavBar';
 import TodoList from './components/TodoList';
 import TodoListHooks from './components/TodoListHooks';
@@ -16,13 +15,9 @@ function App() {
 					<Route path="/todolist" render={()=>
 						<TodoList/>
 					}/>
-					<Route path="/todoListHooks"  render={()=>
+					<Route path="/todoListHooks" exact render={()=>
 						<TodoListHooks/>
 					}/>
-					<Route path="/drap-drop" exact render={()=>
-						<DrapDrop/>
-					}/>
-					<Redirect from='/' to='/drap-drop' />
 				</div>
 			</BrowserRouter>
 		</TodoState>

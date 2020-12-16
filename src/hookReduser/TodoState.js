@@ -36,11 +36,11 @@ export const TodoState = ({children}) =>{
 
     const addEvent = async (text, file) => {
         loading();
-        let event = {text, file}
-        const result = await axios.post(`${url}events.json`, event);
+        let id = Date.now()
+        let event = {text, file,id}
+        await axios.post(`${url}events.json`, event);
         const payload = {
-            ...event,
-            id: result.data.name
+            ...event
         }
         dispatch({type:ADD_EVENT, payload})
     }
@@ -49,11 +49,17 @@ export const TodoState = ({children}) =>{
         await axios.delete(`${url}events/${id}.json`);
         dispatch({type:REMOVE_EVENT, id})
     }
+    const changeDataIndex = async (arr) => {
+        let json = JSON.stringify(arr)
+        console.log('changeDataIndex',json)
+
+    }
     return (
         <TodoContext.Provider value = {{
             fetchEvents,
             addEvent,
             removeEvent,
+            changeDataIndex,
             loading : state.loading,
             events : state.events
         }}

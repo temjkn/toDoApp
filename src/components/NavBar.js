@@ -12,9 +12,6 @@ const NavBar = () => {
                 <li className="nav-item">
                     <NavLink className="nav-link" to='/todoListHooks'>TodoList with HOOKS</NavLink>
                 </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to='/drap-drop'>DrapDrop</NavLink>
-                </li>
             </ul>
         </nav>
     );
