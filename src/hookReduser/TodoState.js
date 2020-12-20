@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
 import { TodoContext } from './TodoContext';
-import { TodoReducer } from './TodoReducer';
+import { DRAG_AND_DROP, TodoReducer } from './TodoReducer';
 import {FETCH_EVENTS,ADD_EVENT, REMOVE_EVENT,LOADING} from './TodoReducer';
 
 const url = 'https://neat-dynamo-234320-default-rtdb.firebaseio.com/';
@@ -25,15 +25,16 @@ export const TodoState = ({children}) =>{
     const fetchEvents = async () => {
         loading();
         const result = await axios.get(`${url}events.json`);
-        const payload = Object.keys(result.data).map( key =>{
-            return {
-                ...result.data[key],
-                id: key
-            }
-        });
-        dispatch({type:FETCH_EVENTS, payload})
+        if(result.data !== null){
+            const payload = Object.keys(result.data).map( key =>{
+                return {
+                    ...result.data[key],
+                    id: key
+                }
+            });
+            dispatch({type:FETCH_EVENTS, payload})
+        }
     }
-
     const addEvent = async (text, file) => {
         loading();
         let id = Date.now()
@@ -49,6 +50,9 @@ export const TodoState = ({children}) =>{
         await axios.delete(`${url}events/${id}.json`);
         dispatch({type:REMOVE_EVENT, id})
     }
+    const dragAndDrop = (payload) => {
+            dispatch({type:DRAG_AND_DROP, payload})
+        }
     const changeDataIndex = async (arr) => {
         let json = JSON.stringify(arr)
         console.log('changeDataIndex',json)
@@ -59,6 +63,7 @@ export const TodoState = ({children}) =>{
             fetchEvents,
             addEvent,
             removeEvent,
+            dragAndDrop,
             changeDataIndex,
             loading : state.loading,
             events : state.events

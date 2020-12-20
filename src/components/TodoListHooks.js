@@ -1,25 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext} from 'react';
 import { TodoContext } from '../hookReduser/TodoContext';
 import FormHook from './formHook/FormHook';
 import ListGroupHook from './listGroupHook/ListGroupHook';
 
 const TodoListHooks = () => {
-    const {fetchEvents,addEvent,events} = useContext(TodoContext); //получаю флаг загрузки и другие для использования
-
-    const [draggble, setDragglbe] = useState(events);
-
-    // useEffect( ()=> {
-    //     setDragglbe(events);
-    //     fetchEvents();
-    //     console.log('useEffect events:',events)
-    //     console.log('useEffect draggble:',draggble)
-    // }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+    const {addEvent} = useContext(TodoContext); //получаю флаг загрузки и другие для использования
 
     return (
         <div>
-            TodoList with HOOKS
+            <h2>TodoList with HOOKS</h2>
             <FormHook addEvent = {addEvent}/>
-            <ListGroupHook draggble={draggble} setDragglbe={setDragglbe}/>
+            <h3>This is list draggable</h3>
+            <ListGroupHook />
         </div>
     );
 };

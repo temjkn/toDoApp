@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import img from '../../img/unnamed.png';
@@ -29,72 +29,35 @@ const SortableList = SortableContainer(({cards,removeEvent}) => {
     );
 });
 
-
-// const ListGroupHook = ({events,changeDataIndex,removeEvent,loading,fetchEvents}) => {
-const ListGroupHook = ({draggble,setDragglbe}) => {
-    const {fetchEvents,events,removeEvent,loading,changeDataIndex} = useContext(TodoContext);
-
-    console.log('ListGroupHook events:',events)
-    console.log('ListGroupHook draggble:',draggble)
+const ListGroupHook = () => {
+    const {fetchEvents,events,removeEvent,loading,dragAndDrop} = useContext(TodoContext);
 
     useEffect( ()=> {
         fetchEvents();
-        // setDragglbe(events);
-        console.log('useEffect events:',events)
-        console.log('useEffect draggble:',draggble)
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onSortEnd = ({oldIndex, newIndex}) => {
-        setDragglbe(arrayMove(draggble, oldIndex, newIndex));
-        changeDataIndex(events);
-        console.log('onSortEnd',draggble)
+        dragAndDrop(arrayMove(events, oldIndex, newIndex));
     };
 
-    return (
-        <>
-            { loading
-            ? <h1>LOADING, WAIT</h1>
-            : <SortableList
-                cards={events}
-                removeEvent = {removeEvent}
-                loading = {loading}
-                onSortEnd={onSortEnd}
-                axis={"xy"}
-            />
-            }
-        </>
-    );
+    if(events.length <= 0){
+        return <h1>NO EVENTS</h1>
+    }else{
+        return (
+            <>
+                { loading
+                ? <h1>LOADING, WAIT</h1>
+                : <SortableList
+                    cards={events}
+                    removeEvent = {removeEvent}
+                    loading = {loading}
+                    onSortEnd={onSortEnd}
+                    axis={"xy"}
+                />
+                }
+            </>
+        );
+    }
 };
 
 export default ListGroupHook;
-
-// const ListGroupHook = ({events,removeEvent,loading}) => {
-//     return (<>
-//         {loading
-//             ? <h1>LOADING, WAIT</h1>
-//             : <div className = "cards-wrap">
-//                 {
-//                     events.length
-//                         ? events.map( item => (<div className="card" key={item.id}>
-//                                 <button 
-//                                     type="button" 
-//                                     className="btn btn-outline-danger btn-sm"
-//                                     onClick = {()=>removeEvent(item.id)}
-//                                 >&times;
-//                                 </button>
-//                                 <img src={item.file ? item.file : img} className="card-img-top" alt={item.file ? item.file : img}/>
-//                                 <div className="card-body">
-//                                     <p className="card-text">{item.text}</p>
-//                                 </div>
-//                             </div>
-//                             )
-//                         )
-//                     : <h2> No events</h2>
-//                 }
-//             </div>
-//         }
-//         </>
-//     )
-// };
-
-// export default ListGroupHook;
