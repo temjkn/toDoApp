@@ -6,13 +6,14 @@ import ListGroupHook from './listGroupHook/ListGroupHook';
 const TodoListHooks = () => {
     const {fetchEvents,addEvent,events} = useContext(TodoContext); //получаю флаг загрузки и другие для использования
 
-    const [draggble, setDragglbe] = useState([]);
+    const [draggble, setDragglbe] = useState(events);
 
-    useEffect( ()=> {
-        fetchEvents()
-        setDragglbe(events)
-        console.log('setDragglbe', draggble)
-    }, !events)  // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect( ()=> {
+    //     setDragglbe(events);
+    //     fetchEvents();
+    //     console.log('useEffect events:',events)
+    //     console.log('useEffect draggble:',draggble)
+    // }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

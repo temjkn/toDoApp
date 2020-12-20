@@ -34,17 +34,19 @@ const SortableList = SortableContainer(({cards,removeEvent}) => {
 const ListGroupHook = ({draggble,setDragglbe}) => {
     const {fetchEvents,events,removeEvent,loading,changeDataIndex} = useContext(TodoContext);
 
-    console.log(events)
+    console.log('ListGroupHook events:',events)
+    console.log('ListGroupHook draggble:',draggble)
 
-    // useEffect( ()=> {
-    //     fetchEvents();
-    //     // setState(events);
-    //     // console.log(state)
-    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect( ()=> {
+        fetchEvents();
+        // setDragglbe(events);
+        console.log('useEffect events:',events)
+        console.log('useEffect draggble:',draggble)
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         setDragglbe(arrayMove(draggble, oldIndex, newIndex));
-        changeDataIndex(draggble);
+        changeDataIndex(events);
         console.log('onSortEnd',draggble)
     };
 
@@ -53,7 +55,7 @@ const ListGroupHook = ({draggble,setDragglbe}) => {
             { loading
             ? <h1>LOADING, WAIT</h1>
             : <SortableList
-                cards={draggble}
+                cards={events}
                 removeEvent = {removeEvent}
                 loading = {loading}
                 onSortEnd={onSortEnd}
